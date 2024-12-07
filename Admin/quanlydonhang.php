@@ -28,7 +28,8 @@ $stmt = $conn->prepare("
         nd.tennguoidung,
         nd.email,
         tgh.tentrangthai as trangthai_giaohang,
-        ttt.tentrangthai as trangthai_thanhtoan
+        ttt.tentrangthai as trangthai_thanhtoan,
+        dh.phuongthucthanhtoan
     FROM donhang dh 
     JOIN nguoidung nd ON dh.mand = nd.mand 
     JOIN trangthai_giaohang tgh ON dh.matrangthai_giaohang = tgh.matrangthai
@@ -58,6 +59,7 @@ ob_start();
                     <th>Ngày đặt</th>
                     <th>Tổng tiền</th>
                     <th>Trạng thái</th>
+                    <th>Phương thức thanh toán</th>
                     <th>Chi tiết</th>
                 </tr>
             </thead>
@@ -78,6 +80,7 @@ ob_start();
                             <div>Giao hàng: <?php echo $order['trangthai_giaohang']; ?></div>
                             <div>Thanh toán: <?php echo $order['trangthai_thanhtoan']; ?></div>
                         </td>
+                        <td><?php echo $order['phuongthucthanhtoan']; ?></td>
                         <td>
                             <button class="view-details-btn" onclick="showOrderDetails(<?php echo $order['madonhang']; ?>)">
                                 <i class="fas fa-eye"></i> Xem chi tiết
@@ -293,7 +296,7 @@ ob_start();
                 alert('Đã xảy ra lỗi khi cập nhật trạng thái');
             });
     }
-</script> 
+</script>
 
 <?php
 $content = ob_get_clean();

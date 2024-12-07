@@ -12,6 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($_POST['action'] === 'update' && isset($_POST['quantity'])) {
             $quantity = max(1, min(10, (int)$_POST['quantity']));
             $_SESSION['cart'][$productId]['quantity'] = $quantity;
+            if (isset($_POST['size'])) {
+                $_SESSION['cart'][$productId]['size'] = $_POST['size'];
+            }
         } else if ($_POST['action'] === 'remove') {
             unset($_SESSION['cart'][$productId]);
         }
@@ -54,6 +57,7 @@ ob_start();
                     <tr>
                         <th>Sản Phẩm</th>
                         <th>Giá</th>
+                        <th>Size</th>
                         <th>Số Lượng</th>
                         <th>Thành Tiền</th>
                         <th>Thao Tác</th>
@@ -72,6 +76,22 @@ ob_start();
                             </td>
                             <td class="product-price">
                                 <?php echo number_format($product['gia'], 0, ',', '.'); ?> VNĐ
+                            </td>
+                            <td class="product-size">
+                                <form method="POST" class="size-form">
+                                    <input type="hidden" name="action" value="update">
+                                    <input type="hidden" name="productId" value="<?php echo $product['madh']; ?>">
+                                    <input type="hidden" name="quantity" value="<?php echo $cartItems[$product['madh']]['quantity']; ?>">
+                                    <select name="size" class="size-select" onchange="this.form.submit()">
+                                        <?php
+                                        $sizes = range(37, 41);
+                                        foreach ($sizes as $size) {
+                                            $selected = (isset($cartItems[$product['madh']]['size']) && $cartItems[$product['madh']]['size'] == $size) ? 'selected' : '';
+                                            echo "<option value='$size' $selected>$size</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </form>
                             </td>
                             <td class="product-quantity">
                                 <form method="POST" class="quantity-form">
@@ -328,6 +348,13 @@ ob_start();
 
     .continue-shopping:hover {
         background: #c4a030;
+    }
+
+    .size-select {
+        padding: 5px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 70px;
     }
 </style>
 

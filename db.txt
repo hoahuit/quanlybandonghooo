@@ -318,3 +318,5 @@ ALTER TABLE [dbo].[yeuthich]  WITH CHECK ADD FOREIGN KEY([mand])
 REFERENCES [dbo].[nguoidung] ([mand])
 ON DELETE CASCADE
 GO
+ALTER TABLE [dbo].[chitietdonhang]
+ADD [size] NVARCHAR(50) NULL;

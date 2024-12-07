@@ -24,7 +24,7 @@ if (!$product) {
 }
 
 // Truy vấn đánh giá sản phẩm
-$reviewSql = "SELECT danhgia.*, nguoidung.mand 
+$reviewSql = "SELECT danhgia.*, nguoidung.tennguoidung 
               FROM danhgia 
               INNER JOIN nguoidung ON danhgia.mand = nguoidung.mand 
               WHERE danhgia.masp = :productId AND danhgia.isdelete = 0 
@@ -146,7 +146,7 @@ ob_start();
             <?php foreach ($reviews as $review): ?>
                 <div class="review-item">
                     <div class="review-author">
-                        <strong><?php echo htmlspecialchars($review['mand']); ?></strong>
+                        <strong><?php echo htmlspecialchars($review['tennguoidung']); ?></strong>
                         <span class="review-date"><?php echo htmlspecialchars($review['ngaydanhgia']); ?></span>
                     </div>
                     <div class="review-rating">

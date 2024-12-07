@@ -46,8 +46,8 @@ try {
     $donHangId = $conn->lastInsertId();
 
     // Thêm chi tiết đơn hàng vào bảng `chitietdonhang`
-    $sqlInsertChiTiet = "INSERT INTO chitietdonhang (madh, madonhang, soluong, dongia)
-                         VALUES (:madh, :madonhang, :soluong, :dongia)";
+    $sqlInsertChiTiet = "INSERT INTO chitietdonhang (madh, madonhang, soluong, dongia, size)
+                         VALUES (:madh, :madonhang, :soluong, :dongia, :size)";
     $stmtChiTiet = $conn->prepare($sqlInsertChiTiet);
 
     foreach ($cartItems as $item) {
@@ -56,7 +56,8 @@ try {
             ':madh' => $item['productId'],
             ':madonhang' => $donHangId,
             ':soluong' => $item['quantity'],
-            ':dongia' => $productPrice
+            ':dongia' => $productPrice,
+            ':size' => $item['size']
         ]);
     }
 

@@ -132,22 +132,21 @@ ob_start();
 <style>
     .dashboard {
         padding: 2rem;
-    }
-
-    .dashboard-header {
-        margin-bottom: 2rem;
+        font-family: 'Arial', sans-serif;
     }
 
     .dashboard-header h1 {
-        color: #2c3e50;
-        font-size: 2rem;
+        color: #34495e;
+        font-size: 2.5rem;
         margin: 0;
+        text-align: center;
     }
 
     .stats-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 2rem;
+        margin-top: 2rem;
     }
 
     .stat-card {
@@ -208,18 +207,6 @@ ob_start();
         margin: 0;
     }
 
-    @media (max-width: 768px) {
-        .dashboard {
-            padding: 1rem;
-        }
-
-        .stats-grid {
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-    }
-
-    /* Add new styles for charts */
     .charts-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -244,18 +231,11 @@ ob_start();
         width: 100% !important;
         height: 300px !important;
     }
-
-    @media (max-width: 768px) {
-        .charts-grid {
-            grid-template-columns: 1fr;
-        }
-    }
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Prepare data
         const revenueLabels = <?php echo json_encode(array_column($revenueData, 'thang')); ?>;
         const revenueValues = <?php echo json_encode(array_column($revenueData, 'doanhthu')); ?>;
         const statusLabels = <?php echo json_encode(array_column($orderStatusData, 'tentrangthai')); ?>;
@@ -263,7 +243,6 @@ ob_start();
         const productLabels = <?php echo json_encode(array_column($topProductsData, 'tendongho')); ?>;
         const productValues = <?php echo json_encode(array_column($topProductsData, 'soluongban')); ?>;
 
-        // Revenue Chart
         const revenueChart = new Chart(document.getElementById('revenueChart'), {
             type: 'line',
             data: {
@@ -299,7 +278,6 @@ ob_start();
             }
         });
 
-        // Order Status Chart
         const orderStatusChart = new Chart(document.getElementById('orderStatusChart'), {
             type: 'doughnut',
             data: {
@@ -326,7 +304,6 @@ ob_start();
             }
         });
 
-        // Top Products Chart
         const topProductsChart = new Chart(document.getElementById('topProductsChart'), {
             type: 'bar',
             data: {
